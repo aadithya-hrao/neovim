@@ -1,14 +1,14 @@
 return {
   {
-  'rstacruz/vim-closer',
-  opts = {},
-  config = function ()
-  end
+    'rstacruz/vim-closer',
+    opts = {},
+    config = function()
+    end
   },
   {
     'tpope/vim-surround',
     opts = {},
-    config = function ()
+    config = function()
     end
   },
 }
