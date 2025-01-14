@@ -1,5 +1,11 @@
 return {
   {
+    'nvim-telescope/telescope-project.nvim',
+    dependencies = {
+      'nvim-telescope/telescope.nvim',
+    },
+  },
+  {
     'jvgrootveld/telescope-zoxide',
     opts = {
       mappings = {
@@ -8,7 +14,7 @@ return {
             vim.cmd.edit(selection.path)
           end,
           after_action = function(selection)
-            print("Cock changed to " .. selection.path)
+            print("Changed to " .. selection.path)
           end
         },
       },
@@ -22,8 +28,8 @@ return {
     "nvim-telescope/telescope-file-browser.nvim",
     dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
     config = function()
-      vim.keymap.set("n", "<space>sb",function ()
-        require('telescope').extensions.file_browser.file_browser({files=true})
+      vim.keymap.set("n", "<space>sb", function()
+        require('telescope').extensions.file_browser.file_browser({ files = true })
       end, { noremap = true })
     end,
     opts = {
@@ -113,16 +119,16 @@ return {
       vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
       vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
       vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
+      vim.keymap.set('n', '<leader>sp', require'telescope'.extensions.project.project)
 
-      -- Slightly advanced example of overriding default behavior and theme
       vim.keymap.set('n', '<leader>/', function()
-        -- You can pass additional configuration to telescope to change theme, layout, etc.
-        builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
-          winblend = 10,
-          previewer = false,
-        })
-      end, { desc = '[/] Fuzzily search in current buffer' })
-
+          builtin.live_grep({
+            search_dirs = { vim.fn.expand("%:p") },
+            prompt_title = 'Live Grep in Current file',
+          }
+          )
+        end,
+        { desc = '[/] Fuzzily search in current buffer' })
       -- Also possible to pass additional configuration options.
       --  See `:help telescope.builtin.live_grep()` for information about particular keys
       vim.keymap.set('n', '<leader>s/', function()

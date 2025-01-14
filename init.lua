@@ -166,6 +166,17 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+
+-- Automatically update tmux whenever you change directory
+local function update_tmux_cwd()
+  local cwd = vim.fn.getcwd()
+  local cmd = string.format("tmux select-pane -T 'PWD: %s'", cwd)
+  os.execute(cmd)
+end
+
+vim.api.nvim_create_autocmd({"DirChanged"}, {
+  callback = update_tmux_cwd,
+})
 -- Define the autocommand group
 
 

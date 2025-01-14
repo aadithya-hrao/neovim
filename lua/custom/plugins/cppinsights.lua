@@ -1,5 +1,5 @@
 return {
   'Freed-Wu/cppinsights.vim',
   opts ={},
-  config = function() return end,
+  config = function() end,
 }
